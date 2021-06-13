@@ -1,20 +1,20 @@
 chrome.runtime.onInstalled.addListener((details) => {
+	chrome.storage.local.set({
+		shows: [],
+	})
 	chrome.contextMenus.create({
-		title: "Test Context Menu",
+		title: "Search TV Show",
 		id: "contextMenu1",
 		contexts: ["page", "selection"]
 	});
 	chrome.contextMenus.onClicked.addListener((event) => {
-		chrome.tabs.create({
-			url: `https://www.imdb.com/find?1=${event.selectionText}&ref_=nv_sr_sm`
-		});
+		fetch(`https://api.tvmaze.com/search/shows?q=${event.selectionText}`)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				chrome.storage.local.set({
+					shows: data,
+				});
+			});
 	});
-});
-
-
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	console.log(msg);
-	console.log(sender);
-	sendResponse("receive message from background");
-	chrome.tabs.sendMessage(sender.tab.id, "Got your message from background!")
 });
