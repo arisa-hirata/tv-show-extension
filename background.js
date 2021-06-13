@@ -5,13 +5,12 @@ chrome.runtime.onInstalled.addListener((details) => {
 		contexts: ["page", "selection"]
 	});
 	chrome.contextMenus.onClicked.addListener((event) => {
-		console.log(event);
-		chrome.tabs.query({
-			currentWindow: true,
-		}, (tabs) => {
-			console.log(tabs);
+		chrome.tabs.create({
+			url: `https://www.imdb.com/find?1=${event.selectionText}&ref_=nv_sr_sm`
 		});
 	});
 });
 
 console.log("background script running");
+
+// create a new tab with url whatever we want
