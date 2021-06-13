@@ -12,5 +12,3 @@ chrome.runtime.onInstalled.addListener((details) => {
 });
 
 console.log("background script running");
-
-// create a new tab with url whatever we want
