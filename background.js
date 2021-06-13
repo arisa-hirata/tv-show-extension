@@ -6,9 +6,10 @@ chrome.runtime.onInstalled.addListener((details) => {
 	});
 	chrome.contextMenus.onClicked.addListener((event) => {
 		console.log(event);
-		chrome.search.query({
-			disposition: "NEW_TAB",
-			text: `imdb ${event.selectionText}`
+		chrome.tabs.query({
+			currentWindow: true,
+		}, (tabs) => {
+			console.log(tabs);
 		});
 	});
 });
